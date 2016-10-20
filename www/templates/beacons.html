@@ -1,0 +1,10 @@
+<ion-view view-title="Beacons"  ng-init="list()">
+  <ion-content>
+    <h1>Beacons</h1>
+    <div>
+  			<div ng-repeat="beaconName in data" class="item">
+  				<p> {{ beaconName.bName }} </p>
+  			</div>
+  		</div>
+  </ion-content>
+</ion-view>
