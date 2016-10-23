@@ -41,6 +41,24 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+  .state('app.classCode', {
+    url: '/classCode',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/classCode.html',
+        controller: 'ClassCodeCtrl'
+      }
+    }
+  })
+    .state('app.studentList', {
+    url: '/studentList',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/studentList.html',
+        controller: 'StudentListCtrl'
+      }
+    }
+  })
   .state('app.beacons', {
     url: '/beacons',
     views: {

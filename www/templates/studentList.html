@@ -1,0 +1,12 @@
+<ion-view view-title="Student List" ng-init="displayList()">
+  <ion-content>
+    <h1>Students</h1>
+    <div ng-repeat="student in info.StudentList" class="item">
+    <div ng-repeat="studentName in student" class="item">
+        <p> Name: {{ studentName.fullName }}</p>
+        <p> Matric: {{ studentName.matricNumber }} </p>
+        <p> User Name: {{ studentName.displayedName }} </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

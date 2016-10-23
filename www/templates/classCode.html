@@ -1,0 +1,20 @@
+<ion-view view-title="Attendance"  ng-init="list()">
+  <ion-content>
+    <h1>Classes</h1>
+    <!--div ng-repeat="bc in data.Classes" class="item">
+  			<div ng-repeat="code in bc" class="item">
+  				<p> {{ code.classCode() }} </p>
+  			  <p> {{getTimeStudent(code.date)}} </p>
+  				<p> {{ code.uniqueKeyNum()}} </p>
+  				<p> {{ code.distance}} </p>
+  			</div>
+  		</div-->
+      <div ng-init="uniqueKeyNum()" class="item">
+      <p> Name: {{ getStudentName(name) }}</p>
+      <p> Matric: {{ getStudentMatric(name) }} </p>
+      <p>Beacon: {{ beacon }} </p>
+      <p>Date: {{ getTimeStudent(date) }}</p>
+      <p>Distance: {{ distance }}</p>
+      </div>
+  </ion-content>
+</ion-view>

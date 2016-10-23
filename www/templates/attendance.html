@@ -2,9 +2,9 @@
   <ion-content>
     <h1>Present</h1>
     <div ng-repeat="bc in data.Beacons" class="item">
-  			<div ng-repeat="nameS in bc" class="item">
-  				<p> {{ nameS.beaconName }} </p>
-  				<p> {{getTimeStudent(nameS.date)}} </p>
+  			<div ng-repeat="studentName in bc" class="item">
+  				<p> {{ studentName.beaconName }} </p>
+  				<p> {{getTimeStudent(studentName.date)}} </p>
   				<p> {{ nameS.name }} </p>
   				<p> {{ nameS.distance}} </p>
   			</div>

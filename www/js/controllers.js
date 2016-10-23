@@ -59,6 +59,65 @@ angular.module('starter.controllers', ['firebase'])
 
 
 })
+.controller('ClassCodeCtrl', function($scope, $firebase, $firebaseObject){
+     var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Classes")
+    $scope.list = function() {
+        var codeList = $firebaseObject(fbServer)
+        codeList.$bindTo($scope, "data");
+    }
+   
+   $scope.uniqueKeyNum = function(){
+     var uniqueKey = fbServer.child("3452").child("b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958");
+     //uniqueKey.$bindTo($scope, "info");
+      uniqueKey.on("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+        $scope.name = childSnapshot.child("name").val();
+        $scope.beacon = childSnapshot.child("beacon").val();
+        $scope.date = childSnapshot.child("date").val();
+        $scope.distance = childSnapshot.child("distance").val();
+      })
+    })
+    }
+    $scope.getTimeStudent = function(number) {
+        var date = new Date(number);
+        var number = date.getHours();
+        var hour = date.getHours().toString();
+        var min = date.getMinutes().toString();
+        return date.toLocaleString();
+    }
+    $scope.getStudentName = function(name){
+        var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
+        fb.on("value", function(snapshot) {
+        $scope.fullname = snapshot.child(name).child("fullName").val();
+    })
+        return $scope.fullname;
+  }
+    $scope.getStudentMatric = function(name){
+        var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
+        fb.on("value", function(snapshot) {
+        $scope.matricNum =  snapshot.child(name).child("matricNumber").val();
+    })
+      return $scope.matricNum;
+    }
+
+  
+
+})
+.controller('StudentListCtrl', function($scope, $firebase, $firebaseObject){
+    var studentFBref = new Firebase("https://beaconfunction.firebaseio.com/StudentList");
+    $scope.displayList = function(){
+      var studentList = $firebaseObject(studentFBref)
+        studentList.$bindTo($scope, "info");
+      /*fb.on("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+        $scope.name = childSnapshot.child("fullName").val();
+        $scope.userName = childSnapshot.child("displayedName").val();
+        $scope.matricNumber = childSnapshot.child("matricNumber").val();
+      })
+    })*/
+    }
+
+})
 .controller('BeaconCtrl', function($scope, $firebase, $firebaseObject){
   var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Beacons")
   $scope.list = function() {
