@@ -1,0 +1,46 @@
+<ion-view view-title="Beacon Mapping">
+  <ion-content>
+
+    <div class="list">
+        <div class="item" ng-repeat="(key, value) in beacons">
+            <div class="row">
+                <div class="col truncate">
+                    {{value.uuid}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    major: {{value.major}}
+                </div>
+                <div class="col">
+                    minor: {{value.minor}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{value.accuracy}}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <button class="button button-full button-positive" ng-click="placeBlueberry()">
+      Place Blueberry
+    </button>
+
+    <button class="button button-full button-positive" ng-click="placeIce()">
+      Place Ice
+    </button>
+
+    <button class="button button-full button-positive" ng-click="placeMint()">
+      Place Mint
+    </button>
+
+    <div class="list">
+    <p> Distance of Ice away from User: {{ iceDistance }} </p>
+    </div>
+
+
+  </ion-content>
+</ion-view>

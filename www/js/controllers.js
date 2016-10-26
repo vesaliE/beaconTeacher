@@ -125,4 +125,52 @@ angular.module('starter.controllers', ['firebase'])
         beaconList.$bindTo($scope, "data");
     }
 
-});
+})
+
+.controller('roomMapCtrl', function($scope, $rootScope, $ionicPlatform, $cordovaBeacon) {
+
+  $scope.beacons = {};
+
+  $ionicPlatform.ready(function() {
+
+        $cordovaBeacon.requestWhenInUseAuthorization();
+
+        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
+            var uniqueBeaconKey;
+            for(var i = 0; i < pluginResult.beacons.length; i++) {
+                uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
+                $scope.beacons[uniqueBeaconKey] = pluginResult.beacons[i];
+                
+            }
+            $scope.$apply();
+            
+        });
+
+        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+
+    });
+  
+  $scope.iceDistance = -9999;
+  
+  $scope.placeIce = function() {
+      /*
+      for (var b in $scope.beacons) {
+        console.log(b.major + " " + b.minor)
+        if (b.major == 15958 && b.minor == 22958) {
+          $scope.iceDistance = b.accuracy;
+        }
+      }
+      */
+      angular.forEach($scope.beacons, function(value, index) {
+        console.log("PRESSED");
+
+        if (value.major == 15956 && value.minor == 22958) {
+          console.log(value.major + " " + value.minor);
+          $scope.iceDistance = value.accuracy;
+        }
+      })
+  }
+  
+    
+
+}); 
