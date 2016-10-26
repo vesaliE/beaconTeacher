@@ -25,20 +25,40 @@
     </div>
     
 
-    <button class="button button-full button-positive" ng-click="placeBlueberry()">
+    <button class="button button-full button-positive" ng-click="lockBlueberry()">
       Place Blueberry
     </button>
 
-    <button class="button button-full button-positive" ng-click="placeIce()">
+    <button class="button button-full button-positive" ng-click="lockIce()">
       Place Ice
     </button>
 
-    <button class="button button-full button-positive" ng-click="placeMint()">
+    <button class="button button-full button-positive" ng-click="lockMint()">
       Place Mint
     </button>
 
+    <button class="button button-full button-positive" ng-click="getIB()">
+      Get Ice Blueberry Distance
+    </button>
+
+    <button class="button button-full button-positive" ng-click="getIM()">
+      Get Ice Mint Distance
+    </button>
+
+    <button class="button button-full button-positive" ng-click="getBM()">
+      Get Blueberry Mint Distance
+    </button>
+
     <div class="list">
-    <p> Distance of Ice away from User: {{ iceDistance }} </p>
+     <p> Distance of Ice away from User: {{ iceDistance }} </p>
+     <p> Distance of Blueberry away from User: {{ blueberryDistance }} </p>
+     <p> Distance of Mint away from User: {{ mintDistance }} </p>
+    </div>
+
+    <div class="list">
+      <p> Distance of Ice - Blueberry: {{ IceBlueberry }} </p>
+      <p> Distance of Ice - Mint: {{ IceMint }} </p>
+      <p> Distance of Blueberry - Mint: {{ BlueberryMint }} </p>
     </div>
 
 

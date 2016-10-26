@@ -151,18 +151,11 @@ angular.module('starter.controllers', ['firebase'])
     });
   
   $scope.iceDistance = -9999;
+  $scope.blueberryDistance = -9999;
+  $scope.mintDistance = -9999;
   
-  $scope.placeIce = function() {
-      /*
-      for (var b in $scope.beacons) {
-        console.log(b.major + " " + b.minor)
-        if (b.major == 15958 && b.minor == 22958) {
-          $scope.iceDistance = b.accuracy;
-        }
-      }
-      */
+  $scope.lockIce = function() {
       angular.forEach($scope.beacons, function(value, index) {
-        console.log("PRESSED");
 
         if (value.major == 15956 && value.minor == 22958) {
           console.log(value.major + " " + value.minor);
@@ -170,7 +163,44 @@ angular.module('starter.controllers', ['firebase'])
         }
       })
   }
+
+  $scope.lockBlueberry = function() {
+    angular.forEach($scope.beacons, function(value, index) {
+
+      if (value.major == 54228 && value.minor == 17064) {
+          console.log(value.major + " " + value.minor);
+          $scope.blueberryDistance = value.accuracy;
+        
+      }
+    })
+  }
+
+  $scope.lockMint = function() {
+    angular.forEach($scope.beacons, function(value, index) {
+
+      if (value.major == 61897 && value.minor == 45819) {
+          console.log(value.major + " " + value.minor) 
+          $scope.mintDistance = value.accuracy;
+        
+      }
+    })
+  }
+
+  $scope.IceBlueberry = -9999;
+  $scope.IceMint = -9999;
+  $scope.BlueberryMint = -9999;
   
+  $scope.getIB = function() {
+    $scope.IceBlueberry = $scope.iceDistance;
+  }
+
+  $scope.getIM = function() {
+    $scope.IceMint = $scope.iceDistance;
+  }
+
+  $scope.getBM = function() {
+    $scope.BlueberryMint = $scope.mintDistance;
+  }
     
 
 }); 
