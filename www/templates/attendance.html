@@ -1,13 +1,13 @@
 <ion-view view-title="Attendance"  ng-init="list()">
   <ion-content>
     <h1>Present</h1>
-    <div ng-repeat="bc in data.Beacons" class="item">
-  			<div ng-repeat="studentName in bc" class="item">
-  				<p> {{ studentName.beaconName }} </p>
-  				<p> {{getTimeStudent(studentName.date)}} </p>
-  				<p> {{ nameS.name }} </p>
-  				<p> {{ nameS.distance}} </p>
-  			</div>
+    <div ng-repeat="studentName in data.StudentList" class="item">
+  			<!--div ng-repeat="studentName in bc" class="item"-->
+          <p> Username: {{ studentName.displayedName }} </p>
+  				<p> Name: {{ studentName.fullName }} </p>
+  				<!--p> {{getTimeStudent(studentName.date)}} </p-->
+  				<p> Matric Number: {{ studentName.matricNumber }} </p>
+  			<!--/div-->
   		</div>
   </ion-content>
 </ion-view>

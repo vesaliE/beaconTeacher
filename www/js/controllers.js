@@ -66,8 +66,9 @@ angular.module('starter.controllers', ['firebase'])
         codeList.$bindTo($scope, "data");
     }
    
-   $scope.uniqueKeyNum = function(){
-     var uniqueKey = fbServer.child("3452").child("b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958");
+   $scope.uniqueKeyNum = function(token, beacon){
+     var uniqueKey = fbServer.child(token).child(beacon); 
+     //.child("b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958");
      //uniqueKey.$bindTo($scope, "info");
       uniqueKey.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot){
@@ -104,10 +105,10 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 .controller('StudentListCtrl', function($scope, $firebase, $firebaseObject){
-    var studentFBref = new Firebase("https://beaconfunction.firebaseio.com/StudentList");
+    var studentFBref = new Firebase("https://beaconfunction.firebaseio.com/");
     $scope.displayList = function(){
       var studentList = $firebaseObject(studentFBref)
-        studentList.$bindTo($scope, "info");
+        studentList.$bindTo($scope, "data");
       /*fb.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot){
         $scope.name = childSnapshot.child("fullName").val();
