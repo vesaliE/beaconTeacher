@@ -126,4 +126,82 @@ angular.module('starter.controllers', ['firebase'])
         beaconList.$bindTo($scope, "data");
     }
 
-});
+})
+
+.controller('roomMapCtrl', function($scope, $rootScope, $ionicPlatform, $cordovaBeacon) {
+
+  $scope.beacons = {};
+
+  $ionicPlatform.ready(function() {
+
+        $cordovaBeacon.requestWhenInUseAuthorization();
+
+        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
+            var uniqueBeaconKey;
+            for(var i = 0; i < pluginResult.beacons.length; i++) {
+                uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
+                $scope.beacons[uniqueBeaconKey] = pluginResult.beacons[i];
+                
+            }
+            $scope.$apply();
+            
+        });
+
+        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+
+    });
+  
+  $scope.iceDistance = -9999;
+  $scope.blueberryDistance = -9999;
+  $scope.mintDistance = -9999;
+  
+  $scope.lockIce = function() {
+      angular.forEach($scope.beacons, function(value, index) {
+
+        if (value.major == 15956 && value.minor == 22958) {
+          console.log(value.major + " " + value.minor);
+          $scope.iceDistance = value.accuracy;
+        }
+      })
+  }
+
+  $scope.lockBlueberry = function() {
+    angular.forEach($scope.beacons, function(value, index) {
+
+      if (value.major == 54228 && value.minor == 17064) {
+          console.log(value.major + " " + value.minor);
+          $scope.blueberryDistance = value.accuracy;
+        
+      }
+    })
+  }
+
+  $scope.lockMint = function() {
+    angular.forEach($scope.beacons, function(value, index) {
+
+      if (value.major == 61897 && value.minor == 45819) {
+          console.log(value.major + " " + value.minor) 
+          $scope.mintDistance = value.accuracy;
+        
+      }
+    })
+  }
+
+  $scope.IceBlueberry = -9999;
+  $scope.IceMint = -9999;
+  $scope.BlueberryMint = -9999;
+  
+  $scope.getIB = function() {
+    $scope.IceBlueberry = $scope.iceDistance;
+  }
+
+  $scope.getIM = function() {
+    $scope.IceMint = $scope.iceDistance;
+  }
+
+  $scope.getBM = function() {
+    $scope.BlueberryMint = $scope.mintDistance;
+  }
+    
+
+}); 
