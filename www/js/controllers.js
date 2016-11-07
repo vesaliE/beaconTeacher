@@ -127,7 +127,7 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 
-.controller('roomMapCtrl', function($scope, $rootScope, $ionicPlatform, $cordovaBeacon) {
+.controller('roomMapCtrl', function($scope, $rootScope, $ionicPlatform, $cordovaBeacon, $firebase) {
 
   $scope.beacons = {};
 
@@ -190,16 +190,29 @@ angular.module('starter.controllers', ['firebase'])
   $scope.IceMint = -9999;
   $scope.BlueberryMint = -9999;
   
-  $scope.getIB = function() {
+  $scope.getIB = function(classCode) {
     $scope.IceBlueberry = $scope.iceDistance;
+    var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
+    beacon.child(classCode).child("IceBlueberry").set({
+      distance: $scope.iceDistance
+    })
+
   }
 
-  $scope.getIM = function() {
+  $scope.getIM = function(classCode) {
     $scope.IceMint = $scope.iceDistance;
+    var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
+    beacon.child(classCode).child("IceMint").set({
+      distance: $scope.iceDistance
+    })
   }
 
-  $scope.getBM = function() {
+  $scope.getBM = function(classCode) {
     $scope.BlueberryMint = $scope.mintDistance;
+    var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
+    beacon.child(classCode).child("BlueberryMint").set({
+      distance: $scope.iceDistance
+    })
   }
     
 
