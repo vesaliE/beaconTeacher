@@ -43,34 +43,34 @@ angular.module('starter.controllers', ['firebase'])
 
 
 .controller('TeacherCtrl', function($scope, $firebase, $firebaseObject){
-     var fbServer = new Firebase("https://beaconfunction.firebaseio.com")
-    $scope.list = function() {
-        var beaconList = $firebaseObject(fbServer)
-        beaconList.$bindTo($scope, "data");
-    }
+ var fbServer = new Firebase("https://beaconfunction.firebaseio.com")
+ $scope.list = function() {
+  var beaconList = $firebaseObject(fbServer)
+  beaconList.$bindTo($scope, "data");
+}
 
-    $scope.getTimeStudent = function(number) {
-        var date = new Date(number);
-        var number = date.getHours();
-        var hour = date.getHours().toString();
-        var min = date.getMinutes().toString();
-        return date.toLocaleString();
-    }
+$scope.getTimeStudent = function(number) {
+  var date = new Date(number);
+  var number = date.getHours();
+  var hour = date.getHours().toString();
+  var min = date.getMinutes().toString();
+  return date.toLocaleString();
+}
 
 
 })
 .controller('ClassCodeCtrl', function($scope, $firebase, $firebaseObject){
-     var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Classes")
-    $scope.list = function() {
-        var codeList = $firebaseObject(fbServer)
-        codeList.$bindTo($scope, "data");
-    }
-   
-   $scope.uniqueKeyNum = function(token, beacon){
-     var uniqueKey = fbServer.child(token).child(beacon); 
+ var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Classes");
+ $scope.list = function() {
+  var codeList = $firebaseObject(fbServer)
+  codeList.$bindTo($scope, "data");
+}
+
+$scope.uniqueKeyNum = function(token, beacon){
+ var uniqueKey = fbServer.child(token).child(beacon); 
      //.child("b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958");
      //uniqueKey.$bindTo($scope, "info");
-      uniqueKey.on("value", function(snapshot) {
+     uniqueKey.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot){
         $scope.name = childSnapshot.child("name").val();
         $scope.beacon = childSnapshot.child("beacon").val();
@@ -78,37 +78,82 @@ angular.module('starter.controllers', ['firebase'])
         $scope.distance = childSnapshot.child("distance").val();
       })
     })
-    }
-    $scope.getTimeStudent = function(number) {
-        var date = new Date(number);
-        var number = date.getHours();
-        var hour = date.getHours().toString();
-        var min = date.getMinutes().toString();
-        return date.toLocaleString();
-    }
-    $scope.getStudentName = function(name){
-        var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
-        fb.on("value", function(snapshot) {
-        $scope.fullname = snapshot.child(name).child("fullName").val();
+   }
+   $scope.BlueberryMint = -9999;
+   $scope.IceMint = -9999;
+   $scope.IceBlueberry = -9999;
+
+   $scope.inClass = function(name, classCode){
+    var fb = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance/"); 
+    var fb2 = fbServer.child(classCode); 
+    fb2.on("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot){
+        $scope.BlueberryMint = childSnapshot.child("BlueberryMint").val();
+        $scope.IceMint = childSnapshot.child("IceMind").val();
+        $scope.IceBlueberry = childSnapshot.child("IceBlueberry").val(); 
+        //console.log($scope.BlueberryMint);
+      })
+
     })
-        return $scope.fullname;
+    var studentFBref1 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A15956%3A22958"); 
+    studentFBref1.on("value", function(snapshot){
+      snapshot.forEach(function(childSnapshot){
+        $scope.distBlueMint = childSnapshot.child(name).child("distance").val();
+      })
+    })
+    var studentFBref2 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A54228%3A17064"); 
+    studentFBref2.on("value", function(snapshot){
+      snapshot.forEach(function(childSnapshot){
+        $scope.distIceMint = childSnapshot.child(name).child("distance").val();
+      })
+    })
+
+    var studentFBref3 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A61897%3A45819"); 
+    studentFBref3.on("value", function(snapshot){
+      snapshot.forEach(function(childSnapshot){
+        $scope.distIceBlue = childSnapshot.child(name).child("distance").val();
+      })
+    })
+
+    if($scope.distBlueMint > $scope.IceBlueberry || $scope.distBlueMint > $scope.IceMint){
+      $scope.result = "Not in Class!";
+      return $scope.result; 
+    }
+    else 
+      $scope.result = "In Class";
+    return $scope.result;
   }
-    $scope.getStudentMatric = function(name){
-        var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
-        fb.on("value", function(snapshot) {
-        $scope.matricNum =  snapshot.child(name).child("matricNumber").val();
+  
+  $scope.getTimeStudent = function(number) {
+    var date = new Date(number);
+    var number = date.getHours();
+    var hour = date.getHours().toString();
+    var min = date.getMinutes().toString();
+    return date.toLocaleString();
+  }
+  $scope.getStudentName = function(name){
+    var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
+    fb.on("value", function(snapshot) {
+      $scope.fullname = snapshot.child(name).child("fullName").val();
     })
-      return $scope.matricNum;
-    }
+    return $scope.fullname;
+  }
+  $scope.getStudentMatric = function(name){
+    var fb = new Firebase("https://beaconfunction.firebaseio.com/StudentList")
+    fb.on("value", function(snapshot) {
+      $scope.matricNum =  snapshot.child(name).child("matricNumber").val();
+    })
+    return $scope.matricNum;
+  }
 
   
 
 })
 .controller('StudentListCtrl', function($scope, $firebase, $firebaseObject){
-    var studentFBref = new Firebase("https://beaconfunction.firebaseio.com/");
-    $scope.displayList = function(){
-      var studentList = $firebaseObject(studentFBref)
-        studentList.$bindTo($scope, "data");
+  var studentFBref = new Firebase("https://beaconfunction.firebaseio.com/");
+  $scope.displayList = function(){
+    var studentList = $firebaseObject(studentFBref)
+    studentList.$bindTo($scope, "data");
       /*fb.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot){
         $scope.name = childSnapshot.child("fullName").val();
@@ -116,15 +161,15 @@ angular.module('starter.controllers', ['firebase'])
         $scope.matricNumber = childSnapshot.child("matricNumber").val();
       })
     })*/
-    }
+  }
 
 })
 .controller('BeaconCtrl', function($scope, $firebase, $firebaseObject){
   var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Beacons")
   $scope.list = function() {
-  var beaconList = $firebaseObject(fbServer)
-        beaconList.$bindTo($scope, "data");
-    }
+    var beaconList = $firebaseObject(fbServer)
+    beaconList.$bindTo($scope, "data");
+  }
 
 })
 
@@ -134,43 +179,43 @@ angular.module('starter.controllers', ['firebase'])
 
   $ionicPlatform.ready(function() {
 
-        $cordovaBeacon.requestWhenInUseAuthorization();
+    $cordovaBeacon.requestWhenInUseAuthorization();
 
-        $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
-            var uniqueBeaconKey;
-            for(var i = 0; i < pluginResult.beacons.length; i++) {
-                uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
-                $scope.beacons[uniqueBeaconKey] = pluginResult.beacons[i];
-                
-            }
-            $scope.$apply();
-            
-        });
+    $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
+      var uniqueBeaconKey;
+      for(var i = 0; i < pluginResult.beacons.length; i++) {
+        uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
+        $scope.beacons[uniqueBeaconKey] = pluginResult.beacons[i];
 
-        $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+      }
+      $scope.$apply();
 
     });
+
+    $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("estimote", "B9407F30-F5F8-466E-AFF9-25556B57FE6D"));
+
+  });
   
   $scope.iceDistance = -9999;
   $scope.blueberryDistance = -9999;
   $scope.mintDistance = -9999;
   
   $scope.lockIce = function() {
-      angular.forEach($scope.beacons, function(value, index) {
+    angular.forEach($scope.beacons, function(value, index) {
 
-        if (value.major == 15956 && value.minor == 22958) {
-          console.log(value.major + " " + value.minor);
-          $scope.iceDistance = value.accuracy;
-        }
-      })
+      if (value.major == 15956 && value.minor == 22958) {
+        console.log(value.major + " " + value.minor);
+        $scope.iceDistance = value.accuracy;
+      }
+    })
   }
 
   $scope.lockBlueberry = function() {
     angular.forEach($scope.beacons, function(value, index) {
 
       if (value.major == 54228 && value.minor == 17064) {
-          console.log(value.major + " " + value.minor);
-          $scope.blueberryDistance = value.accuracy;
+        console.log(value.major + " " + value.minor);
+        $scope.blueberryDistance = value.accuracy;
         
       }
     })
@@ -180,8 +225,8 @@ angular.module('starter.controllers', ['firebase'])
     angular.forEach($scope.beacons, function(value, index) {
 
       if (value.major == 61897 && value.minor == 45819) {
-          console.log(value.major + " " + value.minor) 
-          $scope.mintDistance = value.accuracy;
+        console.log(value.major + " " + value.minor) 
+        $scope.mintDistance = value.accuracy;
         
       }
     })
@@ -215,6 +260,6 @@ angular.module('starter.controllers', ['firebase'])
       distance: $scope.iceDistance
     })
   }
-    
+
 
 }); 
