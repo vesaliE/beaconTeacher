@@ -1,6 +1,11 @@
 <ion-view view-title="Beacon Mapping">
   <ion-content>
 
+    <h1> Enter Class Code </h1>
+    <label class="item item-input">
+      <input type="text" ng-model="classCode" placeholder="Class Code">
+    </label>
+
     <div class="list">
         <div class="item" ng-repeat="(key, value) in beacons">
             <div class="row">
@@ -37,15 +42,15 @@
       Place Mint
     </button>
 
-    <button class="button button-full button-positive" ng-click="getIB()">
+    <button class="button button-full button-positive" ng-click="getIB(classCode)">
       Get Ice Blueberry Distance
     </button>
 
-    <button class="button button-full button-positive" ng-click="getIM()">
+    <button class="button button-full button-positive" ng-click="getIM(classCode)">
       Get Ice Mint Distance
     </button>
 
-    <button class="button button-full button-positive" ng-click="getBM()">
+    <button class="button button-full button-positive" ng-click="getBM(classCode)">
       Get Blueberry Mint Distance
     </button>
 
