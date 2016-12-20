@@ -238,7 +238,7 @@ $scope.uniqueKeyNum = function(token, beacon){
   $scope.IceBlueberry = -9999;
   $scope.IceMint = -9999;
   $scope.BlueberryMint = -9999; //Width
-  $scope.Height = 0; //Width
+  $scope.Height = 0; //Height
   
   $scope.getIB = function(classCode) {
     $scope.IceBlueberry = $scope.iceDistance;
