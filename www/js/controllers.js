@@ -168,10 +168,30 @@ $scope.uniqueKeyNum = function(token, beacon){
 
 })
 .controller('BeaconCtrl', function($scope, $firebase, $firebaseObject){
-  var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Beacons")
-  $scope.list = function() {
-    var beaconList = $firebaseObject(fbServer)
-    beaconList.$bindTo($scope, "data");
+  var classesFB = new Firebase("http://beaconfunction.firebaseio.com/Classes/1996");
+
+  $scope.getCoordinates = function(mintDistance, iceDistance, blueberryDistance) {
+    var room = new Firebase("http://beaconfunction.firebaseio.com/BeaconDistance/3245");
+    room.on("value", function(snapshot) {
+      $scope.Height = snapshot.child(Height).val();
+      $scope.Width = snapshot.child(BlueberryMint).val();
+
+      var MintX = 0; //xa
+      var MintY = 0; //ya
+      var BlueberryX = $scope.Width; //xb
+      var BlueberryY = 0; //yb
+      var IceX = $scope.Width / 2; //xc
+      var IceY = $scope.Height; //yc
+
+      var S = (Math.pow(IceX, 2.) - Math.pow(BlueberryX, 2.) + Math.pow(IceY, 2.) - Math.pow(BlueberryY, 2.) + Math.pow(blueberryDistance, 2.) - Math.pow(iceDistance, 2.)) / 2.0;
+      var T = (Math.pow(MintX, 2.) - Math.pow(BlueberryX, 2.) + Math.pow(MintY, 2.) - Math.pow(BlueberryY, 2.) + Math.pow(iceDistance, 2.) - Math.pow(mintDistance, 2.)) / 2.0;
+      var y = ((T * (BlueberryX - IceX)) - (S * (BlueberryX - MintX))) / (((MintY - BlueberryY) * (BlueberryX - IceX)) - ((IceY - BlueberryY) * (BlueberryX - MintX)));
+      var x = ((y * (MintY - BlueberryY)) - T) / (BlueberryX - MintX);
+
+    })
+    
+
+
   }
 
 })
