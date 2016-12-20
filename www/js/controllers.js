@@ -98,12 +98,14 @@ $scope.uniqueKeyNum = function(token, beacon){
     var studentFBref1 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A15956%3A22958"); 
     studentFBref1.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //ice
         $scope.distBlueMint = childSnapshot.child(name).child("distance").val();
       })
     })
     var studentFBref2 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A54228%3A17064"); 
     studentFBref2.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //blueberry
         $scope.distIceMint = childSnapshot.child(name).child("distance").val();
       })
     })
@@ -111,6 +113,7 @@ $scope.uniqueKeyNum = function(token, beacon){
     var studentFBref3 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A61897%3A45819"); 
     studentFBref3.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //mint
         $scope.distIceBlue = childSnapshot.child(name).child("distance").val();
       })
     })
@@ -234,7 +237,8 @@ $scope.uniqueKeyNum = function(token, beacon){
 
   $scope.IceBlueberry = -9999;
   $scope.IceMint = -9999;
-  $scope.BlueberryMint = -9999;
+  $scope.BlueberryMint = -9999; //Width
+  $scope.Height = 0; //Width
   
   $scope.getIB = function(classCode) {
     $scope.IceBlueberry = $scope.iceDistance;
@@ -258,6 +262,15 @@ $scope.uniqueKeyNum = function(token, beacon){
     var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
     beacon.child(classCode).child("BlueberryMint").set({
       distance: $scope.iceDistance
+    })
+  }
+
+  $scope.getRoom = function(classCode) {
+    var middle = $scope.BlueberryMint / 2;
+    $scope.Height = Math.sqrt((middle * middle) + ($scope.BlueberryMint * $scope.BlueberryMint));
+    var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
+    beacon.child(classCode).child("Height").set({
+      height: $scope.Height
     })
   }
 

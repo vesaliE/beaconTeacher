@@ -3,10 +3,12 @@
     <h1>Present</h1>
     <div ng-repeat="studentName in data.StudentList" class="item">
   			<!--div ng-repeat="studentName in bc" class="item"-->
+          <ion-checkbox>
           <p> Username: {{ studentName.displayedName }} </p>
   				<p> Name: {{ studentName.fullName }} </p>
   				<!--p> {{getTimeStudent(studentName.date)}} </p-->
   				<p> Matric Number: {{ studentName.matricNumber }} </p>
+          </ion-checkbox>
           </div>
           <!--p>In class: {{ inClass(studentName.fullName, 3452)}}</p>
   		  </div-->
