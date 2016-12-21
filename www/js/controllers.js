@@ -98,12 +98,14 @@ $scope.uniqueKeyNum = function(token, beacon){
     var studentFBref1 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A15956%3A22958"); 
     studentFBref1.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //ice
         $scope.distBlueMint = childSnapshot.child(name).child("distance").val();
       })
     })
     var studentFBref2 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A54228%3A17064"); 
     studentFBref2.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //blueberry
         $scope.distIceMint = childSnapshot.child(name).child("distance").val();
       })
     })
@@ -111,6 +113,7 @@ $scope.uniqueKeyNum = function(token, beacon){
     var studentFBref3 = new Firebase("https://beaconfunction.firebaseio.com/Classes/3452/b9407f30-f5f8-466e-aff9-25556b57fe6d%3A61897%3A45819"); 
     studentFBref3.on("value", function(snapshot){
       snapshot.forEach(function(childSnapshot){
+        //mint
         $scope.distIceBlue = childSnapshot.child(name).child("distance").val();
       })
     })
@@ -165,10 +168,30 @@ $scope.uniqueKeyNum = function(token, beacon){
 
 })
 .controller('BeaconCtrl', function($scope, $firebase, $firebaseObject){
-  var fbServer = new Firebase("https://beaconfunction.firebaseio.com/Beacons")
-  $scope.list = function() {
-    var beaconList = $firebaseObject(fbServer)
-    beaconList.$bindTo($scope, "data");
+  var classesFB = new Firebase("http://beaconfunction.firebaseio.com/Classes/1996");
+
+  $scope.getCoordinates = function(mintDistance, iceDistance, blueberryDistance) {
+    var room = new Firebase("http://beaconfunction.firebaseio.com/BeaconDistance/3245");
+    room.on("value", function(snapshot) {
+      $scope.Height = snapshot.child(Height).val();
+      $scope.Width = snapshot.child(BlueberryMint).val();
+
+      var MintX = 0; //xa
+      var MintY = 0; //ya
+      var BlueberryX = $scope.Width; //xb
+      var BlueberryY = 0; //yb
+      var IceX = $scope.Width / 2; //xc
+      var IceY = $scope.Height; //yc
+
+      var S = (Math.pow(IceX, 2.) - Math.pow(BlueberryX, 2.) + Math.pow(IceY, 2.) - Math.pow(BlueberryY, 2.) + Math.pow(blueberryDistance, 2.) - Math.pow(iceDistance, 2.)) / 2.0;
+      var T = (Math.pow(MintX, 2.) - Math.pow(BlueberryX, 2.) + Math.pow(MintY, 2.) - Math.pow(BlueberryY, 2.) + Math.pow(iceDistance, 2.) - Math.pow(mintDistance, 2.)) / 2.0;
+      var y = ((T * (BlueberryX - IceX)) - (S * (BlueberryX - MintX))) / (((MintY - BlueberryY) * (BlueberryX - IceX)) - ((IceY - BlueberryY) * (BlueberryX - MintX)));
+      var x = ((y * (MintY - BlueberryY)) - T) / (BlueberryX - MintX);
+
+    })
+    
+
+
   }
 
 })
@@ -234,7 +257,8 @@ $scope.uniqueKeyNum = function(token, beacon){
 
   $scope.IceBlueberry = -9999;
   $scope.IceMint = -9999;
-  $scope.BlueberryMint = -9999;
+  $scope.BlueberryMint = -9999; //Width
+  $scope.Height = 0; //Height
   
   $scope.getIB = function(classCode) {
     $scope.IceBlueberry = $scope.iceDistance;
@@ -258,6 +282,15 @@ $scope.uniqueKeyNum = function(token, beacon){
     var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
     beacon.child(classCode).child("BlueberryMint").set({
       distance: $scope.iceDistance
+    })
+  }
+
+  $scope.getRoom = function(classCode) {
+    var middle = $scope.BlueberryMint / 2;
+    $scope.Height = Math.sqrt((middle * middle) + ($scope.BlueberryMint * $scope.BlueberryMint));
+    var beacon = new Firebase("https://beaconfunction.firebaseio.com/BeaconDistance");
+    beacon.child(classCode).child("Height").set({
+      height: $scope.Height
     })
   }
 
