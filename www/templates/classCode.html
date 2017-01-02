@@ -1,4 +1,4 @@
-<ion-view view-title="Attendance"  ng-init="list()">
+<ion-view view-title="Attendance">
   <ion-content>
     <h1>Classes</h1>
     <!--div ng-repeat="bc in data.Classes" class="item">
@@ -9,36 +9,14 @@
   				<p> {{ code.distance}} </p>
   			</div>
   		</div-->
-      <div  ng-init="uniqueKeyNum('3452', 'b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958')" class="item">
-      <div>
-      <p> Name: {{ getStudentName(name) }}</p>
-      <p> Matric: {{ getStudentMatric(name) }} </p>
-      <p>Beacon: {{ beacon }} </p>
+      <div  ng-init="uniqueKeyNum('1996')" class="item">
+      <div ng-repeat= "student in studentList" class="item">
+        <article class="item_frame" >
+      <div><p> Name: {{ getStudentName(student.id) }}</p>
+      <p> Matric: {{ getStudentMatric(student.id) }} </p>
       <p>Date: {{ getTimeStudent(date) }}</p>
-      <p>Distance: {{ distance }}</p>
-      <p> Class Code: 3452 </p>
+      <p>Coordinates: ({{ student.xCoordinate }} , {{ student.yCoordinate }})</p></div></article>
       </div>
-      </div>
-      <div ng-init="uniqueKeyNum('3452', 'b9407f30-f5f8-466e-aff9-25556b57fe6d:54228:17064')" class="item">
-      <div>
-      <p> Name: {{ getStudentName(name) }}</p>
-      <p> Matric: {{ getStudentMatric(name) }} </p>
-      <p>Beacon: {{ beacon }} </p>
-      <p>Date: {{ getTimeStudent(date) }}</p>
-      <p>Distance: {{ distance }}</p>
-      <p> Class Code: 3452 </p>
-      </div>
-      </div>
-      <div ng-init="uniqueKeyNum('3452', 'b9407f30-f5f8-466e-aff9-25556b57fe6d:61897:45819')" class="item">
-      <div>
-      <p> Name: {{ getStudentName(name) }}</p>
-      <p> Matric: {{ getStudentMatric(name) }} </p>
-      <p>Beacon: {{ beacon }} </p>
-      <p>Date: {{ getTimeStudent(date) }}</p>
-      <p>Distance: {{ distance }}</p>
-      <p> Class Code: 3452 </p>
-      </div>
-            <h2 style="color: red">{{ inClass(name, 3452) }}</h2>
       </div>
   </ion-content>
 </ion-view>
