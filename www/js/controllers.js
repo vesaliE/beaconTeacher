@@ -172,7 +172,6 @@ $scope.uniqueKeyNum = function(classNum){
   $scope.displayList = function(){
     //var studentNameList = $firebaseObject(fbRef);
     //studentNameList.$bindTo($scope, "data");
-    
     fbRef.on("value", function(snapshot) {
        $scope.studentNameList = [];
       snapshot.forEach(function(childSnapshot){
