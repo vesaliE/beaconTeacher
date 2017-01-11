@@ -86,12 +86,13 @@ $scope.uniqueKeyNum = function(classNum){
         $scope.date = childSnapshot.child("b9407f30-f5f8-466e-aff9-25556b57fe6d:15956:22958").child("date").val();
         var xCoor = getCoordinatesX(mintDist, iceDist, blueberryDist, classNum);
         var yCoor = getCoordinatesY(mintDist, iceDist, blueberryDist, classNum);
-        //if(((xCoor<= $scope.Height || xCoor <= $scope.Width)&& xCoor>=0) && ((yCoor<= $scope.Height || yCoor <= $scope.Width)&& yCoor >=0))
+        if(((xCoor<= $scope.Height || xCoor <= $scope.Width) && xCoor>=0) && ((yCoor<= $scope.Height || yCoor <= $scope.Width) && yCoor >=0)){
         var student = {id: $scope.id, xCoordinate: xCoor, yCoordinate: yCoor}
         //var student = [$scope.id, xCoor, yCoor];
         console.log(student.id)
         $scope.studentList.push(student);
         console.log($scope.studentList);
+        }
         })
       })
    }
