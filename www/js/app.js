@@ -78,5 +78,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordovaBeacon', 'f
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/classCode');
+  $urlRouterProvider.otherwise('/app/studentList');
 });
