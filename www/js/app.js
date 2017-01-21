@@ -68,6 +68,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordovaBeacon', 'f
       }
     }
   })
+  .state('app.classList', {
+    url: '/classList',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/classList.html',
+        controller: 'ClassListCtrl'
+      }
+    }
+  })
   .state('app.roomMap', {
     url: '/roomMap',
     views: {
