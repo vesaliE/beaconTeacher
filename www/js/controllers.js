@@ -63,11 +63,12 @@ $scope.getTimeStudent = function(number) {
     var fb = new Firebase("https://beaconfunction.firebaseio.com/ClassList");
     //var fbClass = fb.child("1010");
     $scope.registerStudent = function(matric,classTime, classCode) {
-     fbClass = fb.child(matric); 
+     fbClass = fb.child(matric);
       fbClass.set({
-        matricNumber: matric, 
-        classTime: classCode
+        matricNumber: matric
       }) 
+      fbClass = fbClass.child(classTime);
+      fbClass.set(classCode);
     }
 })
 .controller('ClassCodeCtrl', function($scope, $firebase, $firebaseObject){
